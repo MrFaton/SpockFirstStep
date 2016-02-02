@@ -3,7 +3,7 @@ package com.nixsolutions.ponarin;
 import java.util.Iterator;
 
 /**
- * Description
+ * Iterator based on array
  *
  * @author Ponarin Igor
  * @since 01.02.16

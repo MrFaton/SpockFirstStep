@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Description
+ * Implementation of ArrayCollection<E> interface
  *
  * @author Ponarin Igor
  * @since 01.02.16
@@ -259,6 +259,12 @@ public class ArrayCollectionImpl<E> implements ArrayCollection<E> {
         return str;
     }
 
+
+    /**
+     * Implementations of ArrayIterator<E> interface
+     *
+     * @param <E> Type of array
+     */
     public class ArrayIteratorImpl<E> implements ArrayIterator<E> {
         private int pos = 0;
 

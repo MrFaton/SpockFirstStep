@@ -3,7 +3,7 @@ package com.nixsolutions.ponarin;
 import java.util.Collection;
 
 /**
- * Description
+ * Collection based on array (like ArrayList)
  *
  * @author Ponarin Igor
  * @since 01.02.16

@@ -4,7 +4,7 @@ import com.nixsolutions.ponarin.impl.ArrayCollectionImpl
 import spock.lang.Specification
 
 /**
- * Description
+ * Test of ArrayCollectionImpl
  *
  * @author Ponarin Igor
  * @since 01.02.16
@@ -17,6 +17,15 @@ class ArrayCollectionImplTest extends Specification {
         arrayCollection = new ArrayCollectionImpl<>()
         baseArray = [1, 2, null, 3, 4, 2]
         arrayCollection.setArray(baseArray.toArray())
+    }
+
+    def isContainsAll = { firstArr, secondArr ->
+        for (elem in secondArr) {
+            if (!firstArr.contains(elem)) {
+                return false
+            }
+        }
+        return true
     }
 
     def "check size at initial state"() {
@@ -88,15 +97,6 @@ class ArrayCollectionImplTest extends Specification {
     }
 
     def "test addAll"() {
-        given:
-        def isContainsAll = { firstArr, secondArr ->
-            for (elem in secondArr) {
-                if (!firstArr.contains(elem)) {
-                    return false
-                }
-            }
-            return true
-        }
         expect:
         arrayCollection.addAll(arrayToAdd)
         isContainsAll(arrayCollection.getArray(), arrayToAdd)
@@ -144,4 +144,49 @@ class ArrayCollectionImplTest extends Specification {
         thrown(NullPointerException)
     }
 
+    def "test remove all with null"() {
+        when:
+        arrayCollection.removeAll(null)
+        then:
+        thrown(NullPointerException)
+    }
+
+    def "test remove all"() {
+        expect:
+        arrayCollection.removeAll(array) == flag
+        isContainsAll(arrayCollection.getArray(), array) == false
+
+        where:
+        array << [[1, 2], [1, 2, null, 3, 4, 2], [3, 8], [9, 11], 7]
+        flag << [true, true, true, false, false]
+    }
+
+    def "test retain all with null"() {
+        when:
+        arrayCollection.retainAll(null)
+        then:
+        thrown(NullPointerException)
+    }
+
+    def "test retain all"() {
+        expect:
+        arrayCollection.retainAll(array) == flag
+        arrayCollection.getArray().size() == size
+
+        where:
+        array << [2, 3, [1, 2, null, 3, 4, 2], [8, 10], [-1, -2], [1, 20]]
+        flag << [true, true, true, false, false, true]
+        size << [2, 1, 6, 6, 6, 1]
+    }
+
+    def "test clear"() {
+        expect:
+        arrayCollection.clear()
+        arrayCollection.getArray().size() == 0
+    }
+
+    def "test get iterator"() {
+        expect:
+        arrayCollection.iterator() != null
+    }
 }
